@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import CardList from '../Components/CardList';
 import SearchBox from '../Components/SearchBox';
+// import AddRoboFriend from '../Components/AddRoboFriend';
+// import RemoveRoboFriend from '../Components/RemoveRoboFriend';
 import Scroll from '../Components/Scroll';
 import './App.css';
 
@@ -22,6 +24,12 @@ onSearchChange = (event) => {
     this.setState({ searchfield: event.target.value })
     }
 
+addNewRobot() {
+    fetch('https://randomuser.me/api/')
+    .then(response=> response.json())
+    .then(users=> this.setState({robots: users }));}
+
+
     render() {
     const { robots, searchfield } = this.state;
     const filteredRobots = robots.filter(robot =>{
@@ -30,7 +38,9 @@ onSearchChange = (event) => {
     return( 
     <div className="tc">
         <h1 className="f1">RoboFriends</h1>
+        <button onClick={(e) => this.deleteRow(e)}>Add RoboFriends</button>
         <SearchBox searchChange={this.onSearchChange}/>
+        <button onClick={(e) => this.deleteRow(e)}>Remove RoboFriends</button>
             <Scroll>
                 <CardList robots={filteredRobots}/>
             </Scroll>
